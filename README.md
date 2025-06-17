@@ -30,3 +30,31 @@ Pikachu is of type Electric, weighs 6kg, and is 0.4m tall.
 ghostmode@GhostMode:~$
 
 '''
+
+''' 2. Batch Pokémon Data Retrieval
+
+Objective: Automate the retrieval of data for multiple Pokémon and store it in separate files.
+
+Instructions:
+
+    Create a script that loops through a list of Pokémon [Bulbasaur, Ivysaur, Venusaur, Charmander, Charmeleon]
+
+    For each Pokémon, retrieve its data from the API and save it to a separate file named after the Pokémon (e.g., pikachu.json, bulbasaur.json…).
+
+    Handle any potential rate-limiting issues by adding a delay between requests.
+
+'''
+
+''' 3. Summarize Pokémon Data
+
+Objective: Create a report that summarizes data for multiple Pokémon.
+
+Instructions:
+
+    Write a shell script that reads all the JSON files generated in Task 2 and extracts the name, height, and weight of each Pokémon.
+
+    Generate a CSV file containing the Pokémon’s name, height, and weight.
+
+    Use awk to calculate the average height and weight of all Pokémon in the report.
+
+'''

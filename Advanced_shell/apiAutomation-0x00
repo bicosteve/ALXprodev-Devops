@@ -18,7 +18,7 @@ RESPONSE=$(curl -s -w "%{http_code}" -o "$OUTPUT_FILE" "$API_URL/$POKEMAN")
 HTTP_STATUS=${RESPONSE: -3}
 
 if [ "$HTTP_STATUS" -eq 200 ]; then
-    echo "✅ Successfully fetched data. Saved to $OUTPUT_FILE."
+    echo "Successfully fetched data. Saved to $OUTPUT_FILE."
 else
     echo "❌ Failed to fetch data. HTTP Status: $HTTP_STATUS" | tee -a "$ERROR_FILE"
 fi
