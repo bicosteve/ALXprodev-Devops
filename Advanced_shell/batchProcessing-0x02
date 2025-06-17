@@ -10,26 +10,40 @@ API_BASE="https://pokeapi.co/api/v2/pokemon"
 OUTPUT_DIR="./pokemon_data"
 
 # Ensure the folder exists
-mkdir -p "$OUTPUT_DIR"  
+mkdir -p "$OUTPUT_DIR"
+
+# Maximum number of retries per request
+MAX_RETRIES=3
 
 # Loop through each Pokémon
 for POKEMON in "${POKEMON_LIST[@]}"; do
-    FILENAME="$OUTPUT_DIR/${POKEMON,,}.json"  
     # Convert to lowercase for filename
+    FILENAME="$OUTPUT_DIR/${POKEMON,,}.json"  
+    RETRIES=0
 
     echo "Fetching data for $POKEMON..."
-    RESPONSE=$(curl -s -w "%{http_code}" -o "$FILENAME" "$API_BASE/${POKEMON,,}")
 
-    HTTP_STATUS=${RESPONSE: -3}
+    while [ $RETRIES -lt $MAX_RETRIES ]; do
+        RESPONSE=$(curl -s -w "%{http_code}" -o "$FILENAME" "$API_BASE/${POKEMON,,}")
+        HTTP_STATUS=${RESPONSE: -3}
 
-    if [ "$HTTP_STATUS" -eq 200 ]; then
-        echo "Data saved to $FILENAME"
-    else
-        echo "Failed to fetch $POKEMON (HTTP $HTTP_STATUS)" | tee -a errors.txt
+        if [ "$HTTP_STATUS" -eq 200 ]; then
+            echo "Data saved to $FILENAME"
+            break
+        else
+            echo "Attempt $((RETRIES+1)) failed (HTTP $HTTP_STATUS), retrying..."
+            RETRIES=$((RETRIES+1))
+            sleep 2  # Add delay before retrying
+        fi
+    done
+
+    if [ $RETRIES -eq $MAX_RETRIES ]; then
+        echo "❌ Failed to fetch $POKEMON after $MAX_RETRIES attempts. Logging error."
+        echo "$POKEMON (HTTP $HTTP_STATUS)" >> errors.txt
     fi
 
     sleep 2  
-    # Add delay to prevent rate-limiting
+    # Add a delay to prevent rate-limiting
 done
 
 echo "All Pokémon data retrieval completed!"

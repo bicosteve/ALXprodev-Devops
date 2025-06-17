@@ -58,3 +58,15 @@ Instructions:
     Use awk to calculate the average height and weight of all Pokémon in the report.
 
 '''
+
+''' 4. Error Handling and Retry Logic
+
+Objective: Add robust error handling and retry logic for API requests.
+
+Instructions:
+
+    Modify the script from Task 2 to handle potential errors (e.g., network issues, invalid Pokémon names).
+
+    If an API request fails, implement a retry mechanism that attempts the request up to 3 times before logging the error and skipping to the next Pokémon.
+
+'''
