@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define the list of Pokémon
-POKEMON_LIST=("Bulbasaur" "Ivysaur" "Venusaur" "Charmander" "Charmeleon")
+POKEMON_LIST=("bulbasaur" "ivysaur" "venusaur" "charmander" "charmeleon")
 
 # Base API URL
 API_BASE="https://pokeapi.co/api/v2/pokemon"
